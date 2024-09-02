@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import messagebox
+from tkinter import messagebox, simpledialog
 from services.flashcard_service import FlashcardService
 
 class DeckSettingsPage:
@@ -16,6 +16,7 @@ class DeckSettingsPage:
         self.update_name_button = tk.Button(root, text="Update Deck Name", command=self.update_deck_name)
         self.card_count_label = tk.Label(root, text="Card Count: ")
         self.delete_deck_button = tk.Button(root, text="Delete Deck", command=self.delete_deck, fg="red")
+        self.export_button = tk.Button(root, text="Export Cards to Clipboard", command=self.export_cards)
 
         # UI Elements for Importing Cards
         self.import_text = tk.Text(root, height=10, width=60)
@@ -30,6 +31,7 @@ class DeckSettingsPage:
         self.update_name_button.pack(pady=10)
         self.card_count_label.pack(pady=10)
         self.delete_deck_button.pack(pady=10)
+        self.export_button.pack(pady=10)
 
         # Layout for Import Cards
         import_frame = tk.Frame(root)
@@ -95,3 +97,19 @@ class DeckSettingsPage:
             self.root.destroy()
             if self.on_update_callback:
                 self.on_update_callback()
+
+    def export_cards(self):
+        cards = self.service.card_repo.get_cards_by_deck(self.deck_id)
+        if not cards:
+            messagebox.showinfo("Info", "No cards to export.")
+            return
+
+        # Format cards as 'side_a_text | side_b_text'
+        export_text = "\n".join(f"{card[2]} | {card[4]}" for card in cards)
+
+        # Copy the formatted text to the clipboard
+        self.root.clipboard_clear()
+        self.root.clipboard_append(export_text)
+        self.root.update()  # Make sure clipboard changes are saved
+
+        messagebox.showinfo("Success", "Cards copied to clipboard.")
