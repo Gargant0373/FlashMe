@@ -1,5 +1,6 @@
 import tkinter as tk
-from tkinter import messagebox, simpledialog
+from tkinter import messagebox
+
 from services.flashcard_service import FlashcardService
 
 class DeckSettingsPage:
@@ -72,7 +73,7 @@ class DeckSettingsPage:
         lines = import_text.splitlines()
         cards = []
         for line in lines:
-            parts = line.split('|')
+            parts = line.split(' | ')
             if len(parts) != 2:
                 messagebox.showerror("Error", "Each line must be in the format: 'Side A Text | Side B Text'")
                 return
@@ -107,9 +108,11 @@ class DeckSettingsPage:
         # Format cards as 'side_a_text | side_b_text'
         export_text = "\n".join(f"{card[2]} | {card[4]}" for card in cards)
 
-        # Copy the formatted text to the clipboard
-        self.root.clipboard_clear()
-        self.root.clipboard_append(export_text)
-        self.root.update()  # Make sure clipboard changes are saved
-
-        messagebox.showinfo("Success", "Cards copied to clipboard.")
+        try:
+            # Copy the formatted text to the clipboard
+            self.root.clipboard_clear()
+            self.root.clipboard_append(export_text)
+            self.root.update()
+            messagebox.showinfo("Success", "Cards copied to clipboard.")
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to copy to clipboard: {e}")
