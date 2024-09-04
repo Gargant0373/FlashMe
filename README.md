@@ -4,6 +4,7 @@
 In order to run the application you must:
 1. Clone it with `git clone git@github.com:Gargant0373/FlashMe.git`
 2. Change the working directory by running `cd FlashMe`
+3. Install the requirements `pip install -r requirements.txt`
 3. Run the python application with `python src/app.py`
 
 ## How to use the application
