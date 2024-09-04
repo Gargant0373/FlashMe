@@ -12,6 +12,7 @@ You can create a deck of cards by not having a deck selected and pressing the `C
 You can review the cards by selecting a deck and pressing `Start Review`. Moving from one card to another is done by updating the difficulty of the card (EASY, MEDIUM and HARD).
 You can import chunks of cards by having them in the format `sideA | sideB`, each card on a new line from the `Settings` page.
 You can view card information and edit them from the `Card Management` page.
+You can backup your database to Google Drive from the `Settings` page by clicking `Backup Database`
 
 ## Prompting an LLM to generate questions
 The prompt for the LLM to understand the format it should generate questions in is:
