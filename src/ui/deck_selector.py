@@ -14,7 +14,9 @@ class DeckSelectorApp:
         self.selected_deck_id = None
 
         # UI Elements
-        self.decks_listbox = tk.Listbox(root, width=60, height=20, font=("Arial", 14))
+        self.decks_listbox = tk.Listbox(root, width=60, height=20, font=("Arial", 14), 
+                                       selectbackground="lightblue", selectforeground="black",
+                                       highlightthickness=0, bg="white", borderwidth=0)
         self.select_deck_button = tk.Button(root, text="Start Review", command=self.start_review, font=("Arial", 12))
         self.settings_button = tk.Button(root, text="Settings", command=self.open_settings, font=("Arial", 12))
         self.card_management_button = tk.Button(root, text="Card Management", command=self.open_card_management, font=("Arial", 12))
@@ -34,9 +36,12 @@ class DeckSelectorApp:
         root.grid_rowconfigure(0, weight=1)
         root.grid_rowconfigure(1, weight=0)
 
-        self.decks_listbox.bind("<Double-1>", self.on_deck_double_click)
+        # Bind events
+        self.decks_listbox.bind("<<ListboxSelect>>", self.update_settings_button_text)
+        self.root.bind("<Button-1>", self.on_click_outside)
 
         self.load_decks()
+        self.update_settings_button_text()
 
     def load_decks(self):
         self.decks_listbox.delete(0, tk.END)
@@ -98,3 +103,15 @@ class DeckSelectorApp:
         # Optionally select the newly created deck or open its settings
         self.decks_listbox.select_set(self.decks_listbox.size() - 1)
         self.open_settings()
+
+    def on_click_outside(self, event):
+        widget = event.widget
+        if widget not in [self.decks_listbox, self.select_deck_button, self.settings_button, self.card_management_button]:
+            self.decks_listbox.selection_clear(0, tk.END)
+            self.update_settings_button_text()
+
+    def update_settings_button_text(self, event=None):
+        if self.decks_listbox.curselection():
+            self.settings_button.config(text="Settings")
+        else:
+            self.settings_button.config(text="Create Deck")
