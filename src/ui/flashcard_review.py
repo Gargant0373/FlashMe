@@ -1,6 +1,9 @@
 import tkinter as tk
+import sys
 from tkinter import messagebox
 from services.flashcard_service import FlashcardService
+
+sys.stdout.reconfigure(encoding='utf-8')
 
 class FlashcardReviewApp:
     def __init__(self, root, deck_id, main_window):
@@ -15,7 +18,7 @@ class FlashcardReviewApp:
         self.root.title("FlashMe > Review")
 
         # UI Elements
-        self.card_label = tk.Label(root, text="", font=("Arial", 16), wraplength=780)
+        self.card_label = tk.Label(root, text="", font=("Arial", 16), wraplength=700)
         self.flip_button = tk.Button(root, text="Flip Card", command=self.flip_card, font=("Arial", 12))
         self.back_button = tk.Button(root, text="Back to Deck Selector", command=self.back_to_selector, font=("Arial", 12))
 
@@ -66,7 +69,6 @@ class FlashcardReviewApp:
         
         # Move to the next card
         self.cards = self.service.get_due_cards(self.deck_id)
-        print(self.cards)
         self.current_card_index = 0
         self.show_front()
 
