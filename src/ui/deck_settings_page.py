@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
-from services.backup_service import backup_and_upload
+from services.backup_service import backup_and_upload, download_latest_backup_locally
 from services.flashcard_service import FlashcardService
 
 class DeckSettingsPage:
@@ -19,6 +19,7 @@ class DeckSettingsPage:
         self.delete_deck_button = tk.Button(root, text="Delete Deck", command=self.delete_deck, fg="red")
         self.export_button = tk.Button(root, text="Export Cards to Clipboard", command=self.export_cards)
         self.backup_button = tk.Button(root, text="Backup Database", command=self.backup_database)
+        self.sync_button = tk.Button(root, text="Sync with Drive", command=self.sync_with_drive)  # Add Sync Button
 
         # UI Elements for Importing Cards
         self.import_text = tk.Text(root, height=10, width=60)
@@ -35,6 +36,7 @@ class DeckSettingsPage:
         self.delete_deck_button.pack(pady=10)
         self.export_button.pack(pady=10)
         self.backup_button.pack(pady=10)  # Add Backup Button
+        self.sync_button.pack(pady=10)    # Add Sync Button
 
         # Layout for Import Cards
         import_frame = tk.Frame(root)
@@ -125,3 +127,14 @@ class DeckSettingsPage:
             messagebox.showinfo("Success", "Database backup completed and uploaded successfully.")
         except Exception as e:
             messagebox.showerror("Error", f"Failed to backup and upload database: {e}")
+
+    def sync_with_drive(self):
+        try:
+            # Download the latest backup from Google Drive
+            download_latest_backup_locally()
+            messagebox.showinfo("Success", "Latest backup downloaded and synced from Google Drive.")
+            
+            if self.on_update_callback:
+                self.on_update_callback()
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to sync with Google Drive: {e}")
