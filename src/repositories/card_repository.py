@@ -72,8 +72,14 @@ class CardRepository:
 
         return new_cards + past_due_cards + future_due_cards
 
-    def __del__(self):
-        self.conn.close()
-    
+    def update_card(self, card_id, side_a_text, side_b_text):
+        cursor = self.conn.cursor()
+        cursor.execute('''
+            UPDATE cards
+            SET side_a_text = ?, side_b_text = ?
+            WHERE id = ?
+        ''', (side_a_text, side_b_text, card_id))
+        self.conn.commit()
+        
     def __del__(self):
         self.conn.close()

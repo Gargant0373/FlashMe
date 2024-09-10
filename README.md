@@ -26,3 +26,28 @@ Each new line represents a flashcard.
 As the software does not support math interpretation use ASCII characters to represent math equations.
 Generate as many questions as you can that relevant to the topic.
 ```
+
+## Backing up files to Google Drive
+Follow these steps to create your own OAuth 2.0 credentials for your application and download the credentials.json file.
+
+### Step 1: Go to the Google Cloud Console
+- Open your browser and go to the [Google Cloud Console](https://console.cloud.google.com/).
+- Log in with your Google account if you haven't already.
+
+### Step 2: Create a New Project
+- In the top-left corner, click the Select a Project dropdown.
+- In the popup window, click the New Project button.
+- Enter a name for your project (e.g., `FlashMe Backup`).
+- Click Create.
+
+### Step 3: Enable Google Drive API
+- In the left-hand menu, click APIs & Services > Library.
+- In the search bar, type Google Drive API and press Enter.
+- Click on Google Drive API from the results.
+- Click the Enable button.
+
+### Step 4: Create OAuth 2.0 Credentials
+- In the left-hand menu, click APIs & Services > Credentials.
+- At the top, click the + CREATE CREDENTIALS button.
+- Select OAuth Client ID from the dropdown.
+- You will be prompted to configure the OAuth consent screen if you haven’t already.
